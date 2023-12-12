@@ -1,6 +1,6 @@
 {
     "name": "lex-module",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": "Alexey Afanasyev <afanasyev.a.a@gmail.com>",
     "license": "MIT",
     "dependencies": {

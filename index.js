@@ -1,18 +1,26 @@
 //index.js
-const str = {
-
-  str: '',
-
-  _self: this,
-
-  from: (str) => {
-    _self.str = str;
-    return _self;
-  },
-  duplicate:() => {
-    return _self.str + _self.str;
+class stingObj  {
+ 
+  constructor(str){
+    this.str = str;
+    return this;
+  }
+  duplicate() {
+    return this.str + this.str;
   }
 }
+
+const str = {
+
+
+
+  from: (str) => {
+    return new stingObj(str);
+  },
+  
+}
+
+
 
   
  module.exports = str;
