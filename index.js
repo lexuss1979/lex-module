@@ -3,17 +3,24 @@ class stingObj  {
  
   constructor(str){
     this.str = str;
+    
     return this;
   }
+
+  toString(){
+    return this.str;
+  }
   duplicate() {
-    return this.str + this.str;
+    this.str = this.str + this.str;
+    return this;
   }
   inverse() {
     let inv = '';
     for(let i=0; i< this.str.length; i++){
         inv += this.str.slice(this.str.length-i-1,this.str.length-i);
     }
-    return inv;
+    this.str =  inv;
+    return this;
   }
 
   startsWith(needle){
@@ -30,7 +37,8 @@ class stingObj  {
 
   truncate(length, start){
     const startPos = start ?? 0;
-    return this.str.slice(startPos, startPos+length)
+    this.str = this.str.slice(startPos, startPos+length)
+    return this;
   }
 
   words(){

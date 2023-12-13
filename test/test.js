@@ -38,4 +38,10 @@ describe('Str', function () {
         assert.equal(str('my very long sentence').truncate(9,3), 'very long');
       });
   });
+
+  describe('#sequense()', function () {
+    it('can apply command in chain', function () {
+            assert.equal(str('my very long sentence').truncate(7).duplicate(), 'my verymy very');
+    });
+  });
 });
