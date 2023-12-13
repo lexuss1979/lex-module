@@ -57,8 +57,62 @@ class stingObj  {
     return [words, freq];
    }
 
-
-
+   //ucFirst
+   //capitalize
+   //uppercase
+   //lowercase
+   //striptags
+   //isHtml
+   //sentensies
+   //replace
+   //replaceFirst
+   //compile(params) - заменяет параметры в строке на заданные
+   //randomWord
+   //randomLetter
+   //isNumeric
+   //isInt
+   //truncateWithTags
+   //smartTruncate
+   //slug
+   //randomizeWords
+   //insertTypo
+   //compareByChar
+   //compareByWord
+   //highlight - подсвечивает заданным шаблоном искомое слово(слова)
+   //queryParams
+   //isUrl
+   //urlScheme
+   //urlDomain
+   //urlRoute
+   //fileExtention
+   //baseFileName
+   //pathToFile
+   //toFileNameWithExtention
+   //randomChars(count)
+   //hash(method)
+   //hashEquals(hash)
+   //acronim
+   //recompileWithQueryParams(paramsArray)
+   //equalsQueryString(querystring)
+   //isAbbrivation - определяет аббревиатуру
+   //parse(template) - разбирает строки на объекты
+   //lettersCount()
+   //digitsCount()
+   //punctuationCount()
+   //isJSON()
+   //uniqWords()
+   //containsFuzzy(word) - ищет вхождения с опечатками
+   //validEmail()
+   //validIP()
+   //validPhoneNumber()
+   //validate(rules)
+   //validDate
+   //validTimestamp
+   //validTime()
+   //truncateRight
+   //mergeByEquals()  - склеивает совмещая начало и конец строк по точном совпадению
+   //diff(str)- находит различия строк
+ 
 
 }
 
