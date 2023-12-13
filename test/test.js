@@ -29,4 +29,13 @@ describe('Str', function () {
         assert.equal(str('my team').contains('cofe'), false);
       });
   });
+
+  describe('#truncate()', function () {
+    it('should return truncated string with only length parameter', function () {
+            assert.equal(str('my very long sentence').truncate(7), 'my very');
+    });
+    it('should return truncated string with length and offset parameter', function () {
+        assert.equal(str('my very long sentence').truncate(9,3), 'very long');
+      });
+  });
 });
