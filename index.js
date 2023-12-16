@@ -107,6 +107,9 @@ class stingObj  {
    //lettersCount()
    //digitsCount()
    //punctuationCount()
+   //emailsCount()
+   //ipCount()
+   //urlCount()
    //isJSON()
    //uniqWords()
    //containsFuzzy(word) - ищет вхождения с опечатками
@@ -120,7 +123,38 @@ class stingObj  {
    //truncateRight
    //mergeByEquals()  - склеивает совмещая начало и конец строк по точном совпадению
    //diff(str)- находит различия строк
- 
+   //everyWord(callback)
+   //everyEmail(callback)
+   //everyIp(callback)
+   //uniqIP()
+   //uniqIPWithCount()
+   //shiftLeft(count)
+   //shiftright(count)
+   //shiftWordLeft(count)
+   //shiftWordRight(count)
+   //firstWord
+   //lastWord
+   //detectMustFrequentDelimiter
+   //splitByFrequentDelimeter
+   //lines
+   //linesCount
+   //everyLine
+   //every(template)
+   //equals
+   //notEquals
+   //hasSameLengthAs
+   //levenstain()
+   //shorterThan
+   //longerThan
+   //containsEmail
+   //containsIP
+   //containsURL
+   //everyURL
+   //sameButWordsOrderChanged
+   //isLikelyName
+   //isFilenameWithExtention
+   
+
 
 }
 
