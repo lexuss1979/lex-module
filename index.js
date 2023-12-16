@@ -66,11 +66,59 @@ class stingObj  {
    }
 
    //ucFirst
+   ucFirst(){
+    this.str = this.str.slice(0,1).toUpperCase() + this.str.slice(1);
+    return this;
+   }
+
+
    //capitalize
+   capitalize(){
+    let newStr = [];
+    this.str.toLowerCase().split(' ').map(part => {
+      newStr.push(part.slice(0,1).toUpperCase() + part.slice(1));     
+    });
+    
+    this.str =  newStr.join(' '); 
+    return this;
+   }
+
    //uppercase
+   uppercase(){
+    this.str = this.str.toUpperCase();
+    return this;
+   }
+
+
    //lowercase
+   lowercase(){
+    this.str = this.str.toLowerCase();
+    return this;
+   }
+
    //striptags
+   stripTags(){
+    this.str = this.str.replaceAll(/(<([^>]+)>)/ig,"");
+    return this;
+   }
+
+
    //isHtml
+   isHtml(){
+    let regexp = /<\/?\s?(\w*)[^]*?>/g;
+    
+    const tags = "document|body|p|div|br|span|section".split('|')
+    const matches = [...this.str.matchAll(regexp)];
+
+    if(matches.length === 0) return false;
+
+    matches.forEach(tag => {
+      if(tags.indexOf(tag[1]) === -1) return false;
+    });
+    return true;
+   }
+
+
    //sentensies
    //replace
    //replaceFirst

@@ -44,4 +44,54 @@ describe('Str', function () {
             assert.equal(str('my very long sentence').truncate(7).duplicate(), 'my verymy very');
     });
   });
+
+     //ucFirst
+
+     describe('#ucFirst()', function () {
+      it('it returns string with first letter capitalized', function () {
+              assert.equal(str('my very long sentence').ucFirst(), 'My very long sentence');
+      });
+    });
+
+
+     //capitalize
+     describe('#capitalize()', function () {
+      it('it returns string with all words capitalized', function () {
+              assert.equal(str('my very long sentence').capitalize(), 'My Very Long Sentence');
+      });
+    });
+
+    
+     //uppercase
+     describe('#uppercase()', function () {
+      it('it returns string with all words uppercased', function () {
+              assert.equal(str('my very long sentence').uppercase(), 'MY VERY LONG SENTENCE');
+      });
+    });
+
+      //lowercase
+      describe('#lowercase()', function () {
+        it('it returns string with all words lowercased', function () {
+                assert.equal(str('My very Long sentence').lowercase(), 'my very long sentence');
+        });
+      });
+
+       //stripTags
+       describe('#stripTags()', function () {
+        it('it returns string without xml/html tags ', function () {
+                assert.equal(str('<p>My very Long sentence.<br><br /></p><div class="some">123</div>').stripTags(), 'My very Long sentence.123');
+        });
+      });
+
+
+         //isHTML
+         describe('#isHTML()', function () {
+          it('it returns true is string contains html tags', function () {
+                  assert.equal(str('<p>My very Long sentence.<br><br /></p><div class="some">123</div>').isHtml(), true);
+          });
+          it('it returns false is string does not contain html tags', function () {
+            assert.equal(str('My very Long sentence.').isHtml(), false);
+    });
+        });
+
 });
