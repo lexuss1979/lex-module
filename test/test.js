@@ -44,4 +44,21 @@ describe('Str', function () {
             assert.equal(str('my very long sentence').truncate(7).duplicate(), 'my verymy very');
     });
   });
+
+     //ucFirst
+
+     describe('#ucFirst()', function () {
+      it('it returns string with first letter capitalized', function () {
+              assert.equal(str('my very long sentence').ucFirst(), 'My very long sentence');
+      });
+    });
+
+
+     //capitalize
+     describe('#capitalize()', function () {
+      it('it returns string with all words capitalized', function () {
+              assert.equal(str('my very long sentence').capitalize(), 'My Very Long Sentence');
+      });
+    });
+
 });

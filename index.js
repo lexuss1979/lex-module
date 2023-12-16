@@ -66,7 +66,23 @@ class stingObj  {
    }
 
    //ucFirst
+   ucFirst(){
+    this.str = this.str.slice(0,1).toUpperCase() + this.str.slice(1);
+    return this;
+   }
+
+
    //capitalize
+   capitalize(){
+    let newStr = [];
+    this.str.toLowerCase().split(' ').map(part => {
+      newStr.push(part.slice(0,1).toUpperCase() + part.slice(1));     
+    });
+    
+    this.str =  newStr.join(' '); 
+    return this;
+   }
+
    //uppercase
    //lowercase
    //striptags
