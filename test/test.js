@@ -146,4 +146,19 @@ describe('Str', function () {
           });
         });
 
+           //compile(params) - replace string wildcards with params
+
+           describe('#compile()', function () {
+            it('it replaces wildcards with values', function () {
+              assert.equal(str('The {type} was not so {size}')
+              .compile({
+                  type: 'village',
+                  size: 'large'
+              }), 
+              'The village was not so large'
+              );
+            });
+            
+          });
+
 });

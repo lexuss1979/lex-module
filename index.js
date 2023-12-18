@@ -157,7 +157,21 @@ class stingObj  {
     return this;
   }
 
-   //compile(params) - заменяет параметры в строке на заданные
+   //compile(params) - replace string wildcards with params
+   compile(params, template){
+      let regexp = template !== undefined ? template : /\{(\w*)\}/g;
+      const wildacrds = [...this.str.matchAll(regexp)];
+  
+      if (wildacrds.length > 0) {
+        wildacrds.forEach( (wildcard, index) => {
+          if(params[wildcard[1]] !== undefined){
+            this.str = this.str.replaceAll(wildcard[0], params[wildcard[1]] )
+          }
+        })
+      } 
+      return this;
+
+   }
    //randomWord
    //randomLetter
    //isNumeric
