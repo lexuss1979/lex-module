@@ -96,7 +96,7 @@ describe('Str', function () {
 
     //sentences - spllit text into array of sentences 
     describe('#sentences()', function () {
-      it('it returns arrya of sentences', function () {
+      it('it returns array of sentences', function () {
         assert.deepEqual(str('It is the first sentence. And this is the second one! What about third? I really think it works, but maybe it doesn\'t...')
         .sentences(), 
         [
@@ -108,5 +108,20 @@ describe('Str', function () {
         );
       });
     });
+        //replace
+        describe('#replace()', function () {
+          it('it makes simple replace', function () {
+            assert.equal(str('The village was not so large')
+            .replace('village','town'), 
+            'The town was not so large'
+            );
+          });
+          it('it makes replace with array', function () {
+            assert.equal(str('The village was not so large')
+            .replace(['village','not '],['town','']), 
+            'The town was so large'
+            );
+          });
+        });
 
 });

@@ -123,6 +123,29 @@ class stingObj  {
      return this.str.replace(/(\.+|\:|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm, "$1$2|").split("|");
    }
 
+   replace(from, to) {
+    
+    if(from.constructor !== Array) {
+      from = [from]
+    }
+    if(to.constructor !== Array) {
+      to = [to]
+    }
+
+    from.forEach( (fromItem, index) => {
+      if(to.constructor === Array) {
+        let toItem = to[index] !== undefined ? to[index] : "";
+        this.str = this.str.replace(fromItem, toItem);
+      } else {
+        this.str = this.str.replace(fromItem, to);
+      }
+      
+    })
+  
+    return this;
+  }
+   
+
 
 
    //replace
