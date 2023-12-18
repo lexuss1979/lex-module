@@ -123,33 +123,40 @@ class stingObj  {
      return this.str.replace(/(\.+|\:|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm, "$1$2|").split("|");
    }
 
+   //replace
    replace(from, to) {
     
-    if(from.constructor !== Array) {
-      from = [from]
-    }
-    if(to.constructor !== Array) {
-      to = [to]
-    }
+    from = from.constructor !== Array ? [from] : from;
+    to = from.constructor !== Array ? [to] : to;
 
     from.forEach( (fromItem, index) => {
+      let toItem = to;
       if(to.constructor === Array) {
-        let toItem = to[index] !== undefined ? to[index] : "";
-        this.str = this.str.replace(fromItem, toItem);
-      } else {
-        this.str = this.str.replace(fromItem, to);
+        toItem = to[index] !== undefined ? to[index] : "";
       }
-      
+      this.str = this.str.replaceAll(fromItem, toItem);      
     })
-  
+
     return this;
   }
-   
 
-
-
-   //replace
    //replaceFirst
+   replaceFirst(from, to) {
+    
+    from = from.constructor !== Array ? [from] : from;
+    to = from.constructor !== Array ? [to] : to;
+
+    from.forEach( (fromItem, index) => {
+      let toItem = to;
+      if(to.constructor === Array) {
+        toItem = to[index] !== undefined ? to[index] : "";
+      }
+      this.str = this.str.replace(fromItem, toItem);      
+    })
+
+    return this;
+  }
+
    //compile(params) - заменяет параметры в строке на заданные
    //randomWord
    //randomLetter

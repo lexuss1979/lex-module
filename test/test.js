@@ -110,16 +110,38 @@ describe('Str', function () {
     });
         //replace
         describe('#replace()', function () {
-          it('it makes simple replace', function () {
+          it('it makes simple replaceAll', function () {
             assert.equal(str('The village was not so large')
             .replace('village','town'), 
             'The town was not so large'
             );
           });
-          it('it makes replace with array', function () {
+          it('it makes replaceAll with array', function () {
             assert.equal(str('The village was not so large')
             .replace(['village','not '],['town','']), 
             'The town was so large'
+            );
+          });
+          it('it makes replace for all occurencies', function () {
+            assert.equal(str('one two bone')
+            .replace('one','on'), 
+            'on two bon'
+            );
+          });
+        });
+
+        //replaceFirst
+        describe('#replaceFirst()', function () {
+          it('it makes simple replace', function () {
+            assert.equal(str('The village was not so large. I liked the village.')
+            .replaceFirst('village','town'), 
+            'The town was not so large. I liked the village.'
+            );
+          });
+          it('it makes replace with array', function () {
+            assert.equal(str('The village was not so large. The village was small.')
+            .replaceFirst(['village','not '],['town','']), 
+            'The town was so large. The village was small.'
             );
           });
         });
