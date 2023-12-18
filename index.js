@@ -119,7 +119,12 @@ class stingObj  {
    }
 
 
-   //sentensies
+   sentences() {
+     return this.str.replace(/(\.+|\:|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm, "$1$2|").split("|");
+   }
+
+
+
    //replace
    //replaceFirst
    //compile(params) - заменяет параметры в строке на заданные
