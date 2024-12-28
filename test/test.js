@@ -222,6 +222,23 @@ describe('Str', function () {
               assert.equal(str('word').randomizeWords(), 'word');
             });
           });
+
+      describe('#insertTypo()', function () {
+        it('should insert a typo into the string', function () {
+          const result = str('my very long sentence').insertTypo();
+          console.log(result);
+          
+          assert.notEqual(result, 'my very long sentence');
+        });
+        it('should return the original string if it is empty', function () {
+          assert.equal(str('').insertTypo(), '');
+        });
+        it('should handle single character strings', function () {
+          const result = str('a').insertTypo();
+          assert.notEqual(result, 'a');
+        });
+      });
+
           
 
 });

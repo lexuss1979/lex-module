@@ -270,7 +270,38 @@ class stingObj {
     return this;
     
   }
-  //insertTypo
+  //insertTypo - inserts a random typo into the string
+  insertTypo() {
+    if (!this.str || this.str.length === 0) return this;
+
+    const typoTypes = [
+      // Swap adjacent characters
+      (str, index) => {
+        if (index >= str.length - 1) return str;
+        return str.slice(0, index) + str[index + 1] + str[index] + str.slice(index + 2);
+      },
+      // Delete a character
+      (str, index) => {
+        return str.slice(0, index) + str.slice(index + 1);
+      },
+      // Insert a random character
+      (str, index) => {
+        const randomChar = String.fromCharCode(Math.floor(Math.random() * 26) + 97); // Random lowercase letter
+        return str.slice(0, index) + randomChar + str.slice(index);
+      },
+      // Replace a character with a random character
+      (str, index) => {
+        const randomChar = String.fromCharCode(Math.floor(Math.random() * 26) + 97); // Random lowercase letter
+        return str.slice(0, index) + randomChar + str.slice(index + 1);
+      }
+    ];
+
+    const randomIndex = Math.floor(Math.random() * this.str.length);
+    const randomTypo = typoTypes[Math.floor(Math.random() * typoTypes.length)];
+    this.str = randomTypo(this.str, randomIndex);
+
+    return this;
+  }
   //compareByChar
   //compareByWord
   //highlight - подсвечивает заданным шаблоном искомое слово(слова)
