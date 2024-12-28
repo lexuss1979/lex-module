@@ -187,6 +187,13 @@ class stingObj {
   //randomLetter
   //isNumeric
   //isInt
+
+  //randomLetter - returns a random letter from the string
+  randomLetter() {
+    if (!this.str || this.str.length === 0) return null;
+    const randomIndex = Math.floor(Math.random() * this.str.length);
+    return this.str[randomIndex];
+  }
   //truncateWithTags
   //smartTruncate
   //slug

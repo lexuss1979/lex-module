@@ -169,6 +169,16 @@ describe('Str', function () {
               assert.equal(str('').randomWord(), null);
             });
           });
+      describe('#randomLetter()', function () {
+        it('should return a random letter from the string', function () {
+          const result = str('my very long sentence').randomLetter();
+          assert.ok('my very long sentence'.includes(result));
+        });
+        it('should return null if the string is empty', function () {
+          assert.equal(str('').randomLetter(), null);
+        });
+      });
+          
 
 });
       
