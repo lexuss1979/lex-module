@@ -1,13 +1,12 @@
 //index.js
-class stingObj  {
- 
-  constructor(str){
+class stingObj {
+  constructor(str) {
     this.str = str;
-    
+
     return this;
   }
 
-  toString(){
+  toString() {
     return this.str;
   }
   duplicate() {
@@ -15,251 +14,257 @@ class stingObj  {
     return this;
   }
   inverse() {
-    let inv = '';
-    for(let i=0; i< this.str.length; i++){
-        inv += this.str.slice(this.str.length-i-1,this.str.length-i);
+    let inv = "";
+    for (let i = 0; i < this.str.length; i++) {
+      inv += this.str.slice(this.str.length - i - 1, this.str.length - i);
     }
-    this.str =  inv;
+    this.str = inv;
     return this;
   }
 
-  startsWith(needle){
-    return this.str.slice(0,needle.length) === needle;
+  startsWith(needle) {
+    return this.str.slice(0, needle.length) === needle;
   }
 
-  endsWith(needle){
-    return this.str.slice(this.str.length-needle.length) === needle;
+  endsWith(needle) {
+    return this.str.slice(this.str.length - needle.length) === needle;
   }
 
-  contains(needle){
+  contains(needle) {
     return this.str.indexOf(needle) > -1;
   }
 
-  truncate(length, start){
+  truncate(length, start) {
     const startPos = start ?? 0;
-    this.str = this.str.slice(startPos, startPos+length)
+    this.str = this.str.slice(startPos, startPos + length);
     return this;
   }
 
-  words(){
-    return this.str.replace(/\W+/g," ").replace(/\s+/g,' ').trim().split(' ').map(word => word.toLowerCase());
-    
-   }
+  words() {
+    if (!this.str || this.str.trim() === "") {
+      return [];
+    }
+    return this.str
+      .replace(/\W+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .split(" ")
+      .map((word) => word.toLowerCase());
+  }
 
-   wordsCount(){
+  wordsCount() {
     return this.words().length;
-   }
+  }
 
-   wordsFreq(){
+  wordsFreq() {
     const words = [];
     const freq = [];
-    
-    this.words().map(word => {
-      if(words.indexOf(word) > -1) {
-        freq[words.indexOf(word)] ++;
+
+    this.words().map((word) => {
+      if (words.indexOf(word) > -1) {
+        freq[words.indexOf(word)]++;
       } else {
         words.push(word);
         freq.push(1);
       }
-    })
-    return [words, freq];
-   }
-
-   //ucFirst
-   ucFirst(){
-    this.str = this.str.slice(0,1).toUpperCase() + this.str.slice(1);
-    return this;
-   }
-
-
-   //capitalize
-   capitalize(){
-    let newStr = [];
-    this.str.toLowerCase().split(' ').map(part => {
-      newStr.push(part.slice(0,1).toUpperCase() + part.slice(1));     
     });
-    
-    this.str =  newStr.join(' '); 
-    return this;
-   }
+    return [words, freq];
+  }
 
-   //uppercase
-   uppercase(){
+  //ucFirst
+  ucFirst() {
+    this.str = this.str.slice(0, 1).toUpperCase() + this.str.slice(1);
+    return this;
+  }
+
+  //capitalize
+  capitalize() {
+    let newStr = [];
+    this.str
+      .toLowerCase()
+      .split(" ")
+      .map((part) => {
+        newStr.push(part.slice(0, 1).toUpperCase() + part.slice(1));
+      });
+
+    this.str = newStr.join(" ");
+    return this;
+  }
+
+  //uppercase
+  uppercase() {
     this.str = this.str.toUpperCase();
     return this;
-   }
+  }
 
-
-   //lowercase
-   lowercase(){
+  //lowercase
+  lowercase() {
     this.str = this.str.toLowerCase();
     return this;
-   }
+  }
 
-   //striptags
-   stripTags(){
-    this.str = this.str.replaceAll(/(<([^>]+)>)/ig,"");
+  //striptags
+  stripTags() {
+    this.str = this.str.replaceAll(/(<([^>]+)>)/gi, "");
     return this;
-   }
+  }
 
-
-   //isHtml
-   isHtml(){
+  //isHtml
+  isHtml() {
     let regexp = /<\/?\s?(\w*)[^]*?>/g;
-    
-    const tags = "document|body|p|div|br|span|section".split('|')
+
+    const tags = "document|body|p|div|br|span|section".split("|");
     const matches = [...this.str.matchAll(regexp)];
 
-    if(matches.length === 0) return false;
+    if (matches.length === 0) return false;
 
-    matches.forEach(tag => {
-      if(tags.indexOf(tag[1]) === -1) return false;
+    matches.forEach((tag) => {
+      if (tags.indexOf(tag[1]) === -1) return false;
     });
     return true;
-   }
+  }
 
+  sentences() {
+    return this.str
+      .replace(/(\.+|\:|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm, "$1$2|")
+      .split("|");
+  }
 
-   sentences() {
-     return this.str.replace(/(\.+|\:|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm, "$1$2|").split("|");
-   }
-
-   //replace
-   replace(from, to) {
-    
+  //replace
+  replace(from, to) {
     from = from.constructor !== Array ? [from] : from;
     to = from.constructor !== Array ? [to] : to;
 
-    from.forEach( (fromItem, index) => {
+    from.forEach((fromItem, index) => {
       let toItem = to;
-      if(to.constructor === Array) {
+      if (to.constructor === Array) {
         toItem = to[index] !== undefined ? to[index] : "";
       }
-      this.str = this.str.replaceAll(fromItem, toItem);      
-    })
+      this.str = this.str.replaceAll(fromItem, toItem);
+    });
 
     return this;
   }
 
-   //replaceFirst
-   replaceFirst(from, to) {
-    
+  //replaceFirst
+  replaceFirst(from, to) {
     from = from.constructor !== Array ? [from] : from;
     to = from.constructor !== Array ? [to] : to;
 
-    from.forEach( (fromItem, index) => {
+    from.forEach((fromItem, index) => {
       let toItem = to;
-      if(to.constructor === Array) {
+      if (to.constructor === Array) {
         toItem = to[index] !== undefined ? to[index] : "";
       }
-      this.str = this.str.replace(fromItem, toItem);      
-    })
+      this.str = this.str.replace(fromItem, toItem);
+    });
 
     return this;
   }
 
-   //compile(params) - replace string wildcards with params
-   compile(params, template){
-      let regexp = template !== undefined ? template : /\{(\w*)\}/g;
-      const wildacrds = [...this.str.matchAll(regexp)];
-  
-      if (wildacrds.length > 0) {
-        wildacrds.forEach( (wildcard, index) => {
-          if(params[wildcard[1]] !== undefined){
-            this.str = this.str.replaceAll(wildcard[0], params[wildcard[1]] )
-          }
-        })
-      } 
-      return this;
+  //compile(params) - replace string wildcards with params
+  compile(params, template) {
+    let regexp = template !== undefined ? template : /\{(\w*)\}/g;
+    const wildacrds = [...this.str.matchAll(regexp)];
 
-   }
-   //randomWord
-   //randomLetter
-   //isNumeric
-   //isInt
-   //truncateWithTags
-   //smartTruncate
-   //slug
-   //randomizeWords
-   //insertTypo
-   //compareByChar
-   //compareByWord
-   //highlight - подсвечивает заданным шаблоном искомое слово(слова)
-   //queryParams
-   //isUrl
-   //urlScheme
-   //urlDomain
-   //urlRoute
-   //fileExtention
-   //baseFileName
-   //pathToFile
-   //toFileNameWithExtention
-   //randomChars(count)
-   //hash(method)
-   //hashEquals(hash)
-   //acronim
-   //recompileWithQueryParams(paramsArray)
-   //equalsQueryString(querystring)
-   //isAbbrivation - определяет аббревиатуру
-   //parse(template) - разбирает строки на объекты
-   //lettersCount()
-   //digitsCount()
-   //punctuationCount()
-   //emailsCount()
-   //ipCount()
-   //urlCount()
-   //isJSON()
-   //uniqWords()
-   //containsFuzzy(word) - ищет вхождения с опечатками
-   //validEmail()
-   //validIP()
-   //validPhoneNumber()
-   //validate(rules)
-   //validDate
-   //validTimestamp
-   //validTime()
-   //truncateRight
-   //mergeByEquals()  - склеивает совмещая начало и конец строк по точном совпадению
-   //diff(str)- находит различия строк
-   //everyWord(callback)
-   //everyEmail(callback)
-   //everyIp(callback)
-   //uniqIP()
-   //uniqIPWithCount()
-   //shiftLeft(count)
-   //shiftright(count)
-   //shiftWordLeft(count)
-   //shiftWordRight(count)
-   //firstWord
-   //lastWord
-   //detectMustFrequentDelimiter
-   //splitByFrequentDelimeter
-   //lines
-   //linesCount
-   //everyLine
-   //every(template)
-   //equals
-   //notEquals
-   //hasSameLengthAs
-   //levenstain()
-   //shorterThan
-   //longerThan
-   //containsEmail
-   //containsIP
-   //containsURL
-   //everyURL
-   //sameButWordsOrderChanged
-   //isLikelyName
-   //isFilenameWithExtention
-   
-
-
+    if (wildacrds.length > 0) {
+      wildacrds.forEach((wildcard, index) => {
+        if (params[wildcard[1]] !== undefined) {
+          this.str = this.str.replaceAll(wildcard[0], params[wildcard[1]]);
+        }
+      });
+    }
+    return this;
+  }
+  //randomWord - returns a random word from the string
+  randomWord() {
+    const words = this.words();
+    console.log("w", words);
+    if (words.length === 0) return null;
+    const randomIndex = Math.floor(Math.random() * words.length);
+    return words[randomIndex];
+  }
+  //randomLetter
+  //isNumeric
+  //isInt
+  //truncateWithTags
+  //smartTruncate
+  //slug
+  //randomizeWords
+  //insertTypo
+  //compareByChar
+  //compareByWord
+  //highlight - подсвечивает заданным шаблоном искомое слово(слова)
+  //queryParams
+  //isUrl
+  //urlScheme
+  //urlDomain
+  //urlRoute
+  //fileExtention
+  //baseFileName
+  //pathToFile
+  //toFileNameWithExtention
+  //randomChars(count)
+  //hash(method)
+  //hashEquals(hash)
+  //acronim
+  //recompileWithQueryParams(paramsArray)
+  //equalsQueryString(querystring)
+  //isAbbrivation - определяет аббревиатуру
+  //parse(template) - разбирает строки на объекты
+  //lettersCount()
+  //digitsCount()
+  //punctuationCount()
+  //emailsCount()
+  //ipCount()
+  //urlCount()
+  //isJSON()
+  //uniqWords()
+  //containsFuzzy(word) - ищет вхождения с опечатками
+  //validEmail()
+  //validIP()
+  //validPhoneNumber()
+  //validate(rules)
+  //validDate
+  //validTimestamp
+  //validTime()
+  //truncateRight
+  //mergeByEquals()  - склеивает совмещая начало и конец строк по точном совпадению
+  //diff(str)- находит различия строк
+  //everyWord(callback)
+  //everyEmail(callback)
+  //everyIp(callback)
+  //uniqIP()
+  //uniqIPWithCount()
+  //shiftLeft(count)
+  //shiftright(count)
+  //shiftWordLeft(count)
+  //shiftWordRight(count)
+  //firstWord
+  //lastWord
+  //detectMustFrequentDelimiter
+  //splitByFrequentDelimeter
+  //lines
+  //linesCount
+  //everyLine
+  //every(template)
+  //equals
+  //notEquals
+  //hasSameLengthAs
+  //levenstain()
+  //shorterThan
+  //longerThan
+  //containsEmail
+  //containsIP
+  //containsURL
+  //everyURL
+  //sameButWordsOrderChanged
+  //isLikelyName
+  //isFilenameWithExtention
 }
 
 const strObj = (str) => {
   return new stingObj(str);
-}
+};
 
-
-
-  
- module.exports = strObj;
+module.exports = strObj;

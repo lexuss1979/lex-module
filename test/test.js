@@ -160,5 +160,15 @@ describe('Str', function () {
             });
             
           });
+          describe('#randomWord()', function () {
+            it('should return a random word from the string', function () {
+              const result = str('my very long sentence').randomWord();
+              assert.ok(['my', 'very', 'long', 'sentence'].includes(result));
+            });
+            it('should return null if the string is empty', function () {
+              assert.equal(str('').randomWord(), null);
+            });
+          });
 
 });
+      
