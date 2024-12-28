@@ -240,8 +240,16 @@ class stingObj {
     return this;
   }
   
-  //smartTruncate
-  //slug
+  //slug - generates a URL-friendly slug from the string
+  slug() {
+    this.str = this.str
+      .toLowerCase() // Convert to lowercase
+      .replace(/[^\w\s-]/g, '') // Remove special characters
+      .replace(/[\s_-]+/g, '-') // Replace spaces and underscores with a single hyphen
+      .replace(/^-+|-+$/g, ''); // Trim hyphens from the start and end
+
+    return this;
+  }
   //randomizeWords
   //insertTypo
   //compareByChar

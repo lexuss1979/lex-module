@@ -191,6 +191,24 @@ describe('Str', function () {
         });
       });
 
+      describe('#slug()', function () {
+        it('should return a slugified string', function () {
+          assert.equal(str('My Very Long Sentence').slug(), 'my-very-long-sentence');
+        });
+        it('should handle special characters', function () {
+          assert.equal(str('My Very Long Sentence!@#$%^&*()').slug(), 'my-very-long-sentence');
+        });
+        it('should handle multiple spaces', function () {
+          assert.equal(str('My   Very   Long   Sentence').slug(), 'my-very-long-sentence');
+        });
+        it('should handle leading and trailing spaces', function () {
+          assert.equal(str('  My Very Long Sentence  ').slug(), 'my-very-long-sentence');
+        });
+        it('should handle mixed case', function () {
+          assert.equal(str('My VeRy LoNg SeNtEnCe').slug(), 'my-very-long-sentence');
+        });
+      });
+
           
 
 });
