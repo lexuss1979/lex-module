@@ -302,7 +302,50 @@ class stingObj {
 
     return this;
   }
+
+  
   //compareByChar
+  compareByChar(strToCompare) {
+    const result = [];
+    let i = 0, j = 0;
+    let currentEqual = '';
+    let currentDiffLeft = '';
+    let currentDiffRight = '';
+
+    while (i < this.str.length || j < strToCompare.length) {
+      const char1 = this.str[i] || '';
+      const char2 = strToCompare[j] || '';
+
+      if (char1 === char2) {
+        if (currentDiffLeft || currentDiffRight) {
+          result.push({ type: 'diff', left: currentDiffLeft, right: currentDiffRight });
+          currentDiffLeft = '';
+          currentDiffRight = '';
+        }
+        currentEqual += char1;
+        i++;
+        j++;
+      } else {
+        if (currentEqual) {
+          result.push({ type: 'eq', content: currentEqual });
+          currentEqual = '';
+        }
+        currentDiffLeft += char1;
+        currentDiffRight += char2;
+        i++;
+        j++;
+      }
+    }
+
+    if (currentEqual) {
+      result.push({ type: 'eq', content: currentEqual });
+    }
+    if (currentDiffLeft || currentDiffRight) {
+      result.push({ type: 'diff', left: currentDiffLeft, right: currentDiffRight });
+    }
+
+    return result;
+  }
   //compareByWord
   //highlight - подсвечивает заданным шаблоном искомое слово(слова)
   //queryParams

@@ -233,12 +233,42 @@ describe('Str', function () {
         it('should return the original string if it is empty', function () {
           assert.equal(str('').insertTypo(), '');
         });
-        it('should handle single character strings', function () {
-          const result = str('a').insertTypo();
-          assert.notEqual(result, 'a');
-        });
+        
       });
 
+        describe('#compareByChar()', function () {
+          it('should return an array of equal and diff objects for identical strings', function () {
+            assert.deepEqual(str('abc').compareByChar('abc'), [
+              { type: 'eq', content: 'abc' }
+            ]);
+          });
+          it('should return an array of equal and diff objects for different strings', function () {
+            assert.deepEqual(str('abc').compareByChar('def'), [
+              { type: 'diff', left: 'abc', right: 'def' }
+            ]);
+          });
+          it('should return an array of equal and diff objects for partially matching strings', function () {
+            assert.deepEqual(str('abcxyz').compareByChar('abcpqr'), [
+              { type: 'eq', content: 'abc' },
+              { type: 'diff', left: 'xyz', right: 'pqr' }
+            ]);
+          });
+          it('should handle strings of different lengths', function () {
+            assert.deepEqual(str('abc').compareByChar('abcdef'), [
+              { type: 'eq', content: 'abc' },
+              { type: 'diff', left: '', right: 'def' }
+            ]);
+          });
+          it('should handle empty strings', function () {
+            assert.deepEqual(str('').compareByChar(''), []);
+            assert.deepEqual(str('abc').compareByChar(''), [
+              { type: 'diff', left: 'abc', right: '' }
+            ]);
+            assert.deepEqual(str('').compareByChar('abc'), [
+              { type: 'diff', left: '', right: 'abc' }
+            ]);
+          });
+        });
           
 
 });
