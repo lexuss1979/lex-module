@@ -194,7 +194,52 @@ class stingObj {
     const randomIndex = Math.floor(Math.random() * this.str.length);
     return this.str[randomIndex];
   }
-  //truncateWithTags
+
+
+  //truncateWithTags - truncates the string while preserving HTML tags
+  truncateWithTags(length) {
+    let truncatedStr = '';
+    let tagStack = [];
+    let currentLength = 0;
+
+    const regex = /(<\/?[^>]+>)|([^<]+)/g;
+    let match;
+
+    while ((match = regex.exec(this.str)) !== null && currentLength < length) {
+      if (match[1]) {
+        // It's a tag
+        truncatedStr += match[1];
+        if (!match[1].startsWith('</')) {
+          // It's an opening tag, push to stack
+          tagStack.push(match[1]);
+        } else {
+          // It's a closing tag, pop from stack
+          tagStack.pop();
+        }
+      } else if (match[2]) {
+        // It's text
+        const text = match[2];
+        const remainingLength = length - currentLength;
+        if (text.length > remainingLength) {
+          truncatedStr += text.slice(0, remainingLength);
+          currentLength += remainingLength;
+        } else {
+          truncatedStr += text;
+          currentLength += text.length;
+        }
+      }
+    }
+
+    // Close any unclosed tags
+    while (tagStack.length > 0) {
+      const tag = tagStack.pop();
+      truncatedStr += `</${tag.match(/<\/?(\w+)/)[1]}>`;
+    }
+
+    this.str = truncatedStr;
+    return this;
+  }
+  
   //smartTruncate
   //slug
   //randomizeWords

@@ -178,6 +178,19 @@ describe('Str', function () {
           assert.equal(str('').randomLetter(), null);
         });
       });
+
+      describe('#truncateWithTags()', function () {
+        it('should return truncated string with HTML tags preserved', function () {
+          assert.equal(str('<p>My very long sentence</p>').truncateWithTags(7), '<p>My very</p>');
+        });
+        it('should handle nested HTML tags', function () {
+          assert.equal(str('<div><p>My very long sentence</p></div>').truncateWithTags(7), '<div><p>My very</p></div>');
+        });
+        it('should handle self-closing HTML tags', function () {
+          assert.equal(str('<p>My very long sentence<br /></p>').truncateWithTags(7), '<p>My very</p>');
+        });
+      });
+
           
 
 });
