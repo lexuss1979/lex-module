@@ -209,6 +209,19 @@ describe('Str', function () {
         });
       });
 
+          describe('#randomizeWords()', function () {
+            it('should return a string with words in random order', function () {
+              const result = str('my very long sentence').randomizeWords();
+              const words = result.split(' ');
+              assert.ok(words.includes('my') && words.includes('very') && words.includes('long') && words.includes('sentence'));
+            });
+            it('should return an empty string if the input is empty', function () {
+              assert.equal(str('').randomizeWords(), '');
+            });
+            it('should handle single word strings', function () {
+              assert.equal(str('word').randomizeWords(), 'word');
+            });
+          });
           
 
 });

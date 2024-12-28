@@ -5,7 +5,15 @@ class stingObj {
 
     return this;
   }
+  length() {
+    return this.str.length;
+  }
 
+  split(delimiter) {
+    return this.str.split(delimiter);
+  }
+
+  
   toString() {
     return this.str;
   }
@@ -250,7 +258,18 @@ class stingObj {
 
     return this;
   }
-  //randomizeWords
+
+  //randomizeWords - shuffles the words in the string randomly
+  randomizeWords() {
+    const words = this.words();
+    for (let i = words.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [words[i], words[j]] = [words[j], words[i]];
+    }
+    this.str = words.join(" ");
+    return this;
+    
+  }
   //insertTypo
   //compareByChar
   //compareByWord
