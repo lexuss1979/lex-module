@@ -414,6 +414,8 @@ class stingObj {
   //sameButWordsOrderChanged
   //isLikelyName
   //isFilenameWithExtention
+
+  //chained function str('some string).uppercaseThan().shiftleftThan().fisrtWorld()
 }
 
 const strObj = (str) => {
