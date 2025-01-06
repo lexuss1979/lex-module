@@ -94,11 +94,11 @@ describe('Str', function () {
     });
   });
 
-    //sentences - spllit text into array of sentences 
+    //sentences - spllit text into array of sentences
     describe('#sentences()', function () {
       it('it returns array of sentences', function () {
         assert.deepEqual(str('It is the first sentence. And this is the second one! What about third? I really think it works, but maybe it doesn\'t...')
-        .sentences(), 
+        .sentences(),
         [
           'It is the first sentence.',
           'And this is the second one!',
@@ -112,19 +112,19 @@ describe('Str', function () {
         describe('#replace()', function () {
           it('it makes simple replaceAll', function () {
             assert.equal(str('The village was not so large')
-            .replace('village','town'), 
+            .replace('village','town'),
             'The town was not so large'
             );
           });
           it('it makes replaceAll with array', function () {
             assert.equal(str('The village was not so large')
-            .replace(['village','not '],['town','']), 
+            .replace(['village','not '],['town','']),
             'The town was so large'
             );
           });
           it('it makes replace for all occurencies', function () {
             assert.equal(str('one two bone')
-            .replace('one','on'), 
+            .replace('one','on'),
             'on two bon'
             );
           });
@@ -134,13 +134,13 @@ describe('Str', function () {
         describe('#replaceFirst()', function () {
           it('it makes simple replace', function () {
             assert.equal(str('The village was not so large. I liked the village.')
-            .replaceFirst('village','town'), 
+            .replaceFirst('village','town'),
             'The town was not so large. I liked the village.'
             );
           });
           it('it makes replace with array', function () {
             assert.equal(str('The village was not so large. The village was small.')
-            .replaceFirst(['village','not '],['town','']), 
+            .replaceFirst(['village','not '],['town','']),
             'The town was so large. The village was small.'
             );
           });
@@ -154,11 +154,11 @@ describe('Str', function () {
               .compile({
                   type: 'village',
                   size: 'large'
-              }), 
+              }),
               'The village was not so large'
               );
             });
-            
+
           });
           describe('#randomWord()', function () {
             it('should return a random word from the string', function () {
@@ -233,7 +233,7 @@ describe('Str', function () {
         it('should return the original string if it is empty', function () {
           assert.equal(str('').insertTypo(), '');
         });
-        
+
       });
 
         describe('#compareByChar()', function () {
@@ -270,6 +270,113 @@ describe('Str', function () {
           });
         });
           
+      describe('#highlight()', function () {
+        it('should highlight the specified word in the string', function () {
+          assert.equal(str('my very long sentence').highlight('long'), 'my very <mark>long</mark> sentence');
+        });
+        it('should highlight multiple occurrences of the specified word', function () {
+          assert.equal(str('my long long sentence').highlight('long'), 'my <mark>long</mark> <mark>long</mark> sentence');
+        });
+        it('should return the original string if the word is not found', function () {
+          assert.equal(str('my very long sentence').highlight('short'), 'my very long sentence');
+        });
+        it('should use user-defined mark for highlighting', function () {
+          assert.equal(str('my very long sentence').highlight('long','<span class="highlight">$&</span>'), 'my very <span class="highlight">long</span> sentence');
+        });
+        it('should handle empty string', function () {
+          assert.equal(str('').highlight('word'), '');
+        });
+        it('should handle empty word', function () {
+          assert.equal(str('my very long sentence').highlight(''), 'my very long sentence');
+        });
+
+      });
+
+          describe('#queryParams()', function () {
+            it('should return an object of query parameters from the string', function () {
+              assert.deepEqual(str('https://example.com?name=John&age=30').queryParams(), {
+                name: 'John',
+                age: '30'
+              });
+            });
+            it('should handle multiple query parameters with the same key', function () {
+              assert.deepEqual(str('https://example.com?name=John&name=Doe&age=30').queryParams(), {
+                name: ['John', 'Doe'],
+                age: '30'
+              });
+            });
+            it('should handle empty query string', function () {
+              assert.deepEqual(str('https://example.com').queryParams(), {});
+            });
+            it('should handle query string without values', function () {
+              assert.deepEqual(str('https://example.com?name&age').queryParams(), {
+                name: '',
+                age: ''
+              });
+            });
+            it('should handle query string with encoded characters', function () {
+              assert.deepEqual(str('https://example.com?name=John%20Doe&age=30').queryParams(), {
+                name: 'John Doe',
+                age: '30'
+              });
+            });
+            it('should handle query string with special characters', function () {
+              assert.deepEqual(str('https://example.com?name=John+Doe&age=30').queryParams(), {
+                name: 'John Doe',
+                age: '30'
+              });
+            });
+            it('should handle query string with arrays', function () {
+              assert.deepEqual(str('https://example.com?name[]=John&name[]=Doe&age=30').queryParams(), {
+                name: ['John', 'Doe'],
+                age: '30'
+              });
+            });
+          });
+      
+          describe('#isUrl()', function () {
+            it('should return true if the string is a valid URL', function () {
+              assert.equal(str('https://example.com').isUrl(), true);
+              assert.equal(str('http://example.com').isUrl(), true);
+              assert.equal(str('example.com').isUrl(), true);
+              
+            });
+            it('should return false if the string is not a valid URL', function () {
+              assert.equal(str('ftp://example.com').isUrl(), false);
+              assert.equal(str('not a url').isUrl(), false);
+            });
+          });
+
+          describe('#urlScheme()', function () {
+            it('should return the scheme of the URL', function () {
+              assert.equal(str('https://example.com').urlScheme(), 'https');
+              assert.equal(str('http://example.com').urlScheme(), 'http');
+            });
+            it('should return null if the string is not a valid URL', function () {
+              assert.equal(str('example.com').urlScheme(), null);
+            });
+          });
+
+          describe('#urlDomain()', function () {
+            it('should return the domain of the URL', function () {
+              assert.equal(str('https://example.com').urlDomain(), 'example.com');
+              assert.equal(str('http://sub.example.com').urlDomain(), 'sub.example.com');
+            });
+            it('should return null if the string is not a valid URL', function () {
+              assert.equal(str('not valid url').urlDomain(), null);
+            });
+          });
+
+          describe('#urlRoute()', function () {
+            it('should return the route of the URL', function () {
+              assert.equal(str('https://example.com/path/to/resource').urlRoute(), '/path/to/resource');
+              assert.equal(str('http://example.com/').urlRoute(), '/');
+            });
+            it('should return null if the string is not a valid URL', function () {
+              assert.equal(str('example.com').urlRoute(), null);
+            });
+          });
+
+
 
 });
-      

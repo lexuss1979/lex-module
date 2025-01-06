@@ -348,11 +348,75 @@ class stingObj {
   }
   //compareByWord
   //highlight - подсвечивает заданным шаблоном искомое слово(слова)
+  highlight(wordsToHighlight, template = '<mark>$&</mark>') {
+    if (!wordsToHighlight || wordsToHighlight.length === 0) return this;
+
+    // Convert wordsToHighlight to an array if it's not already
+    wordsToHighlight = Array.isArray(wordsToHighlight) ? wordsToHighlight : [wordsToHighlight];
+
+    // Create a regex pattern to match any of the words
+    const regexPattern = new RegExp(`(${wordsToHighlight.join('|')})`, 'gi');
+
+    // Replace matches with the template
+    this.str = this.str.replace(regexPattern, template);
+
+    return this;
+  }
   //queryParams
-  //isUrl
-  //urlScheme
-  //urlDomain
-  //urlRoute
+  queryParams() {
+    const params = {};
+    const queryString = this.str.split('?')[1];
+    if (!queryString) return params;
+
+    queryString.split('&').forEach(pair => {
+      // Replace '+' with spaces before decoding
+      const [key, value] = pair.replace(/\+/g, ' ').split('=');
+      const decodedKey = decodeURIComponent(key);
+      const decodedValue = value !== undefined ? decodeURIComponent(value) : '';
+      
+      // Check if the key is an array-like key (e.g., 'name[]')
+      const isArrayKey = decodedKey.endsWith('[]');
+      const baseKey = isArrayKey ? decodedKey.slice(0, -2) : decodedKey;
+      if (params.hasOwnProperty(baseKey)) {
+        // If the key already exists, convert it to an array if it isn't already
+        if (!Array.isArray(params[baseKey])) {
+          params[baseKey] = [params[baseKey]];
+        }
+        params[baseKey].push(decodedValue);
+      } else {
+        // If it's an array-like key, initialize it as an array
+        params[baseKey] = isArrayKey ? [decodedValue] : decodedValue;
+      }
+    });
+
+    return params;
+  }
+  //isUrl - checks if the string is a valid URL
+  isUrl() {
+    const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+    return urlPattern.test(this.str);
+  }
+
+  //urlScheme - extracts the scheme (e.g., http, https) from the URL
+  urlScheme() {
+    const schemePattern = /^(https?):\/\//;
+    const match = this.str.match(schemePattern);
+    return match ? match[1] : null;
+  }
+
+  //urlDomain - extracts the domain from the URL
+  urlDomain() {
+    const domainPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})/;
+    const match = this.str.match(domainPattern);
+    return match ? match[2] + '.' + match[3] : null;
+  }
+
+  //urlRoute - extracts the route (path) from the URL
+  urlRoute() {
+    const routePattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/;
+    const match = this.str.match(routePattern);
+    return match && match[4] ? match[4] : null;
+  }
   //fileExtention
   //baseFileName
   //pathToFile
