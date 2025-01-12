@@ -417,7 +417,13 @@ class stingObj {
     const match = this.str.match(routePattern);
     return match && match[4] ? match[4] : null;
   }
-  //fileExtention
+  //fileExtention - возвращает расширение файла из строки
+  fileExtention() {
+    // Используем регулярное выражение для поиска расширения файла
+    const match = this.str.match(/\.([0-9a-z]+)(?:[\?#]|$)/i);
+    // Если найдено совпадение, возвращаем расширение, иначе null
+    return match ? match[1] : null;
+  }
   //baseFileName
   //pathToFile
   //toFileNameWithExtention

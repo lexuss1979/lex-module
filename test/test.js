@@ -377,6 +377,16 @@ describe('Str', function () {
             });
           });
 
+      describe('#fileExtention()', function () {
+        it('should return file extension from string', function () {
+          assert.equal(str('example.txt').fileExtention(), 'txt');
+          assert.equal(str('archive.tar.gz').fileExtention(), 'gz');
+          assert.equal(str('noextension').fileExtention(), null);
+          assert.equal(str('path/to/file.js').fileExtention(), 'js');
+          assert.equal(str('image.png?width=200').fileExtention(), 'png');
+        });
+      });
+
 
 
 });
